@@ -122,4 +122,8 @@ name:testname
 }(window));
 ```
 
+###返回上一页
+
+直接调用 `window.back();`即可
+
 
