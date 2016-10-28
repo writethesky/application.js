@@ -2,6 +2,12 @@
  * 
  */
 (function(w){
+	
+	
+	
+	/**
+	 * api 相关
+	 */
 	w.api = {
 		host: "http://139.224.54.221:8002/",
 //		host: "http://192.168.199.10:8002/",
@@ -43,7 +49,24 @@
 	}
 	
 	
+	/**
+	 * 返回
+	 */
+	w.apphistory = [];
 
+	w.back = function(){
+		var prev_page_index = w.apphistory.length - 2;
+		if(prev_page_index < 0){
+			return;
+		}
+		
+		var prev_page_data = w.apphistory[prev_page_index];
+		
+		load_page(null, prev_page_data);
+		w.apphistory.pop();
+		w.apphistory.pop();
+		
+	}
 
 
 	w.alert.alert_message = function(msg, m_width, m_height, m_loop_time, m_type){
@@ -106,22 +129,48 @@
 	
 	$("html").on("click", "a", load_page);
 	
-	function load_page(){
+	function load_page(_this, page_data){
 		
-		var dataHref = $(this).attr("data-href");
-		var dataId = $(this).attr("data-id");
-		var dataCss = $(this).attr("data-css");
-		var dataJs = $(this).attr("data-js");
 		
-		var dataObj = $(this).attr("data-obj");
-		if(dataObj){
-			dataObj = dataObj.replace(/'/g, '"');
+		
+		
+		
+		
+		
+		if(page_data){
+			var dataHref = page_data.html;
+			var dataId = page_data.container_id;
+			var dataCss = page_data.css;
+			var dataJs = page_data.js;
 			
-			(dataObj = $.parseJSON(dataObj));
-			w.dataObj = dataObj;
+			var dataObj = page_data.obj;
+		}else{
+			var dataHref = $(this).attr("data-href");
+			var dataId = $(this).attr("data-id");
+			var dataCss = $(this).attr("data-css");
+			var dataJs = $(this).attr("data-js");
+			
+			var dataObj = $(this).attr("data-obj");
+			if(dataObj){
+				dataObj = dataObj.replace(/'/g, '"');
+				
+				(dataObj = $.parseJSON(dataObj));
+				w.dataObj = dataObj;
+			}
+			dataCss = dataCss.split("|");
+			dataJs = dataJs.split("|");
 		}
-		dataCss = dataCss.split("|");
-		dataJs = dataJs.split("|");
+		
+		
+		var page_data = {
+			html: dataHref,
+			css: dataCss,
+			js: dataJs,
+			container_id: dataId,
+			obj: dataObj
+		};
+
+		w.apphistory.push(page_data);
 		
 		dataHref && load.html(dataHref, dataId, function(){
 			
