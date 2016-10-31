@@ -1,9 +1,11 @@
 /**
- * 
+ * application.js v1.0
+ * https://github.com/writethesky
+ * https://github.com/writethesky/application.js
  */
 (function(w){
 	
-	
+	var t = '?t=' + (new Date()).getTime();
 	
 	/**
 	 * api 相关
@@ -182,8 +184,10 @@
 	}
 	
 	function load(){
+		
 		this.html = function(url, id, callback){
-			$.get(url, function(data){
+			
+			$.get(url + t, function(data){
 				$("#" + id).html(data);
 				callback && callback();
 			});
@@ -193,7 +197,7 @@
 			
 			for(i in arr){
 				
-				var href = 'public/css/' + arr[i];
+				var href = 'public/css/' + arr[i] + t;
 				var head = document.getElementsByTagName('HEAD').item(0);
 				var is_run = true;
 				$("link").each(function(){
@@ -224,7 +228,7 @@
 		this.js = function(arr, callback){
 //			console.log(arr);
 			for(i in arr){
-				var src = 'public/js/' + arr[i];
+				var src = 'public/js/' + arr[i] + t;
 				var body = document.getElementsByTagName('body').item(0);
 				var is_run = true;
 				$("script").each(function(){
