@@ -159,8 +159,8 @@
 				(dataObj = $.parseJSON(dataObj));
 				w.dataObj = dataObj;
 			}
-			dataCss = dataCss.split("|");
-			dataJs = dataJs.split("|");
+			dataCss = dataCss ? dataCss.split("|") : "";
+			dataJs = dataJs ? dataJs.split("|") : "";
 		}
 		
 		
