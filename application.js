@@ -100,6 +100,7 @@
 			height: m_height,
 			background: m_background_color,
 			position: 'fixed',
+			zIndex: '9999',
 			color: "#fff",
 			textAlign: 'center',
 			lineHeight: m_height,
@@ -260,11 +261,7 @@
 	var load = new load();
 	
 	
-	$('a').each(function(){
-		if($(this).attr("checked")){
-			load_page.call(this);
-		}
-	});
+
 	
 	//封装一个获取 时间格式为 yyyy/mm/dd  的方法
 	w.getFormatDate = function(dateTmie){
@@ -282,25 +279,9 @@
 			}
 		}
 	}
-//导航切换 背景变色
-	$(".left_bar li").click(function(){
-		$(".left_bar li").css("background","transparent")
-		$(this).css("background","#00bbe9");
-	});
-	
-	//判断登陆  跳转登录页
-	function check_login_status(){
-		w.api.get('index/index', function(data){
-			if(data.status == 0){
-				window.location.href = "login.html";
-			}
-		});
-		setTimeout(check_login_status, 10000);
-	}
-	var url = (window.location.href.split("/"));
-	url = url[url.length - 1];
-	(url == 'login.html') || check_login_status();
 
-	
-	
+	w.load_page = function(_this){
+			load_page.call(_this);
+	};
 }(window));
+
