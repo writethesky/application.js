@@ -4,7 +4,15 @@
  * https://github.com/writethesky/application.js
  */
 (function(w){
-	
+
+
+	if(typeof($) == 'undefined' || typeof($.fn) == 'undefined' || typeof($.fn.jquery) == 'undefined' || $.fn.jquery < '3.1.1'){
+
+		console.info("请引入3.1.1版本以上的jQuery");
+		return;
+	}
+
+
 	var t = '?t=' + (new Date()).getTime();
 	
 	/**
