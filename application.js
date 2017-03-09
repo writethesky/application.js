@@ -18,34 +18,35 @@
 	/**
 	 * api 相关
 	 */
-	w.api = {
-		host: "http://139.224.54.221:8002/",
-//		host: "http://192.168.199.10:8002/",
-		version: "v1",
+	var settings = {
+		location: "",
+		version: "",
 	}
-	w.api.url = w.api.host + w.api.version;
-	w.api.get = function(url, callback){
+	w.api = {};
+	w.api.settings = function(param){
+		if(typeof(param) != 'object' || !param.hasOwnProperty('location') || !param.hasOwnProperty('version')){
+			console.info("参数错误，形如:\
+				{\
+					location: xxx,\
+					version: xxx,\
+				}");
+			return;
+		}
 
-		
-		$.ajax({
-			type:"get",
-			url:w.api.url + "/" + url,
-			dataType: 'json',
-			async:true,
-			xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            success: function(data){
-            	callback(data);
-            }
-		});
+		settings = param;
 	}
-	w.api.post = function(url,arr,callback){
+
+	var ajax = function(url, param, method, callback){
+		for(i in settings){
+			if(settings[i] == ""){
+				console.info("在此之前请调用 api.settings 方法");
+				return;
+			}
+		}
 		$.ajax({
-			type:"post",
-			data: arr,
-			url:w.api.url + "/" + url,
+			type: method,
+			data: param,
+			url: settings.location + "/" + settings.version + "/" + url,
 			dataType: 'json',
 			async:true,
 			xhrFields: {
@@ -53,9 +54,19 @@
             },
             crossDomain: true,
             success: function(data){
-            	callback(data);
+            	callback && callback(data);
             }
 		});
+
+		// todo 当发生异常时，提示异常
+	}
+	w.api.get = function(url, param, callback){
+
+		ajax(url, param, 'get', callback);
+		
+	}
+	w.api.post = function(url, param, callback){
+		ajax(url, param, 'post', callback);
 	}
 	
 	
