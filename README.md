@@ -2,7 +2,7 @@
 
 #依赖
 
-`jquery`
+`jquery 3.1.1`
 
 #使用方法
 
@@ -10,13 +10,14 @@
 
 ##使用api接口
 
-设置api服务器地址
+```
+api.settings({
+	location: "http://xxx.xxx.xxx/", //设置api服务器地址
+	version: 'v1' //设置api版本
+});
+```
 
-`window.api.host = "http://xxx.xxx.xxx/";`
 
-设置api版本
-
-`window.api.version = 'v1';`
 
 api请求分为两种
 
