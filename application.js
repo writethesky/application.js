@@ -194,7 +194,7 @@
 		});
 
 
-		
+
 		return false;
 	}
 	
@@ -210,9 +210,9 @@
 		
 		this.css = function(arr, callback){
 			
-			for(i in arr){
+			if(arr.length > 0){
 				
-				var href = arr[i] + t;
+				var href = arr[0] + t;
 				var head = document.getElementsByTagName('HEAD').item(0);
 				var is_run = true;
 				$("link").each(function(){
@@ -235,9 +235,18 @@
 					head.appendChild(style);
 					
 				}
+
+				arr.shift();
+				var tmp = this.css;
+				cssReady(function(){
+					tmp(arr, callback);
+				});
+
 				
+				
+			}else{
+				callback && callback();
 			}
-			callback && callback();
 		}
 		
 		this.js = function(arr, callback){
@@ -272,6 +281,29 @@
 			callback && callback();
 		}
 	}
+
+
+	function cssReady(fn, link) {
+		var d = document,
+		t = d.createStyleSheet,
+		r = t ? 'rules' : 'cssRules',
+		s = t ? 'styleSheet' : 'sheet',
+		l = d.getElementsByTagName('link');
+		// passed link or last link node
+		link || (link = l[l.length - 1]);
+		function check() {
+			try {
+				return link && link[s] && link[s][r] && link[s][r][0];
+			} catch(e) {
+				return false;
+			}
+		}
+
+		(function poll() {
+			check() && setTimeout(fn, 0) || setTimeout(poll, 100);
+		})();
+	} 
+
 	var load = new load();
 	
 	
