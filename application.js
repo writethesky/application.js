@@ -143,15 +143,10 @@
 
 	
 	
-	$("html").on("click", "a", load_page);
+	$("html").on("click", "a[app]", load_page);
 	
 	function load_page(_this, page_data){
-		
-		
-		
-		
-		
-		
+
 		
 		if(page_data){
 			var dataHref = page_data.html;
@@ -161,11 +156,11 @@
 			
 			var dataObj = page_data.obj;
 		}else{
-			var dataHref = $(this).attr("data-href");
-			var dataId = $(this).attr("data-id");
-			var dataCss = $(this).attr("data-css");
-			var dataJs = $(this).attr("data-js");
-			
+			var dataHref = $(this).attr("href");
+			var dataId = $(this).attr("container");
+			var dataCss = $(this).attr("css");
+			var dataJs = $(this).attr("js");
+		
 			var dataObj = $(this).attr("data-obj");
 			if(dataObj){
 				dataObj = dataObj.replace(/'/g, '"');
@@ -191,12 +186,16 @@
 		w.apphistory.push(page_data);
 		
 		dataHref && load.html(dataHref, dataId, function(){
-			
+			$(window).resize();
 			dataCss && load.css(dataCss, function(){
-				
+				$(window).resize();
 				dataJs && load.js(dataJs);
 			});
 		});
+
+
+		
+		return false;
 	}
 	
 	function load(){

@@ -66,11 +66,13 @@ name:testname
 ```
 
 
-##使用自动载入
+##使用异步载入
 
 自动载入包括html、css、js。自动载入默认使用的还是`<a>`标签，但对`<a>`标签的机制进行了调整，点击`<a>`标签不再是同步页面跳转，而是自动进行异步页面加载
 
 对`<a>`标签进行了属性扩展，现增加属性如下
+
+`app` 此处必需填写，但无需填写值。无此属性的`a`标签依然采用同步跳转机制
 
 `data-href` 需要异步加载的html文件地址
 
@@ -85,11 +87,11 @@ name:testname
 使用示例
 ```
 <a 
-	href="javascript:void(0)"
-	data-id="content"
-	data-href="register.html"
-	data-css="register.css"
-	data-js="register.js"
+	app
+	container="content"
+	href="register.html"
+	css="register.css"
+	js="register.js"
 	data-obj="{user_id: 111}"
 
 >这是一个超连接</a>
