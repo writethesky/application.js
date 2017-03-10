@@ -8,16 +8,17 @@
 
 引入 `<script src="application.js"></script>`
 
-##使用api接口
+##使用之前的设置
 
 ```
 api.settings({
 	location: "http://xxx.xxx.xxx/", //设置api服务器地址
-	version: 'v1' //设置api版本
+	version: 'v1', //设置api版本
+	isChangeURL: false //是否开启url自动变更，此选项仅在  server中允许时可以被设置为true
 });
 ```
 
-
+##使用api接口
 
 api请求分为两种
 

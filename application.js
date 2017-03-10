@@ -21,17 +21,11 @@
 	var settings = {
 		location: "",
 		version: "",
+		isChangeURL: false
 	}
 	w.api = {};
 	w.api.settings = function(param){
-		if(typeof(param) != 'object' || !param.hasOwnProperty('location') || !param.hasOwnProperty('version')){
-			console.info("参数错误，形如:\
-				{\
-					location: xxx,\
-					version: xxx,\
-				}");
-			return;
-		}
+
 
 		settings = param;
 	}
@@ -182,7 +176,9 @@
 			dataCss = dataCss ? dataCss.split("|") : "";
 			dataJs = dataJs ? dataJs.split("|") : "";
 		}
-		
+		if(settings.isChangeURL){
+			w.history.pushState(null, null, dataHref);
+		}
 		
 		var page_data = {
 			html: dataHref,
