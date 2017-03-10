@@ -11,7 +11,7 @@
 ##使用之前的设置
 
 ```
-api.settings({
+app.settings({
 	location: "http://xxx.xxx.xxx/", //设置api服务器地址
 	version: 'v1', //设置api版本
 	isChangeURL: false //是否开启url自动变更，此选项仅在  server中允许时可以被设置为true
@@ -25,12 +25,12 @@ api请求分为两种
 发送get请求
 
 ```
-window.api.get('接口名称', 回调函数);
+app.api.get('接口名称', 回调函数);
 ```
 如
 
 ```
-window.api.get('user/get_name', function(data){
+app.api.get('user/get_name', function(data){
     //todo 接口请求成功后的后续操作
 });
 ```
@@ -45,12 +45,12 @@ Host:xxx.xxx.xxx
 
 发送post请求
 
-`window.api.post(接口名称, 参数, 回调函数);`
+`app.api.post(接口名称, 参数, 回调函数);`
 
 如
 
 ```
-window.api.post('user/set_name', {name: 'testname'}, function(){
+app.api.post('user/set_name', {name: 'testname'}, function(){
     //todo 接口请求成功后的后续操作
 });
 ```
@@ -130,6 +130,6 @@ name:testname
 
 ###返回上一页
 
-直接调用 `window.back();`即可
+直接调用 `app.back();`即可
 
 

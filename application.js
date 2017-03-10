@@ -23,8 +23,8 @@
 		version: "",
 		isChangeURL: false
 	}
-	w.api = {};
-	w.api.settings = function(param){
+	var app = {};
+	app.settings = function(param){
 
 
 		settings = param;
@@ -32,11 +32,12 @@
 
 	var ajax = function(url, param, method, callback){
 		for(i in settings){
-			if(settings[i] == ""){
+			if(settings[i] === ""){
 				console.info("在此之前请调用 api.settings 方法");
 				return;
 			}
 		}
+
 		$.ajax({
 			type: method,
 			data: param,
@@ -54,12 +55,13 @@
 
 		// todo 当发生异常时，提示异常
 	}
-	w.api.get = function(url, param, callback){
+	app.api = {};
+	app.api.get = function(url, param, callback){
 
 		ajax(url, param, 'get', callback);
 		
 	}
-	w.api.post = function(url, param, callback){
+	app.api.post = function(url, param, callback){
 		ajax(url, param, 'post', callback);
 	}
 	
@@ -67,24 +69,24 @@
 	/**
 	 * 返回
 	 */
-	w.apphistory = [];
+	app.apphistory = [];
 
-	w.back = function(){
-		var prev_page_index = w.apphistory.length - 2;
+	app.back = function(){
+		var prev_page_index = app.apphistory.length - 2;
 		if(prev_page_index < 0){
 			return;
 		}
 		
-		var prev_page_data = w.apphistory[prev_page_index];
+		var prev_page_data = app.apphistory[prev_page_index];
 		
 		load_page(null, prev_page_data);
-		w.apphistory.pop();
-		w.apphistory.pop();
+		app.apphistory.pop();
+		app.apphistory.pop();
 		
 	}
 
 
-	w.alert.alert_message = function(msg, m_width, m_height, m_loop_time, m_type){
+	var alert_message = function(msg, m_width, m_height, m_loop_time, m_type){
 		
 		m_width = m_width ? m_width : '100%';
 		m_height = m_height ? m_height : '2rem';
@@ -133,12 +135,12 @@
 		
 	}
 	
-	
-	w.alert.error = function(msg, m_width, m_height, m_loop_time){
-		w.alert.alert_message(msg, m_width, m_height, m_loop_time, 'error');
+	app.alert = {};
+	app.alert.error = function(msg, m_width, m_height, m_loop_time){
+		alert_message(msg, m_width, m_height, m_loop_time, 'error');
 	}
-	w.alert.success = function(msg, m_width, m_height, m_loop_time){
-		w.alert.alert_message(msg, m_width, m_height, m_loop_time, 'success');
+	app.alert.success = function(msg, m_width, m_height, m_loop_time){
+		alert_message(msg, m_width, m_height, m_loop_time, 'success');
 	}
 
 	
@@ -183,7 +185,7 @@
 			obj: dataObj
 		};
 
-		w.apphistory.push(page_data);
+		app.apphistory.push(page_data);
 		
 		dataHref && load.html(dataHref, dataId, function(){
 			$(window).resize();
@@ -326,8 +328,10 @@
 		}
 	}
 
-	w.load_page = function(_this){
+	app.load_page = function(_this){
 			load_page.call(_this);
 	};
+
+	w.app = app;
 }(window));
 
