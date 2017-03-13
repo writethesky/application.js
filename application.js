@@ -19,22 +19,70 @@
 	 * 设置参数
 	 */
 	var settings = {
-		location: "",
-		version: "",
+		
+		api: {
+			location: "",
+			version: "",
+		},
 		isChangeURL: false
 	}
-	var app = {};
-
-	//设置方法
-	app.settings = function(param){
 
 
-		settings = param;
+	
+	var app = {
+		//设置方法
+		settings: function(param){
+			$.extend(settings, param);
+		},
+
+		api: {
+			ajax: function(url, type, param, callback){
+				ajax(url, param, type, callback);
+			},
+			get: function(url, param, callback){
+				ajax(url, param, 'get', callback);
+			},
+
+			post: function(url, param, callback){
+				ajax(url, param, 'post', callback);
+			}
+		},
+
+		load_page: function(_this){
+			load_page.call(_this);
+		},
+
+		back: function(){
+			var prev_page_index = app.apphistory.length - 2;
+			if(prev_page_index < 0){
+				return;
+			}
+			
+			var prev_page_data = app.apphistory[prev_page_index];
+			
+			load_page(null, prev_page_data);
+			app.apphistory.pop();
+			app.apphistory.pop();
+			
+		}
 	}
 
-	var ajax = function(url, param, method, callback){
-		for(var i in settings){
-			if(settings[i] === ""){
+	//对浏览器原生的a标签跳转机制进行调整
+	$("html").on("click", "a[app]", load_page);
+
+	app.apphistory = [];
+
+	/**
+	 * 发送ajax请求
+	 * @param  {[type]}   url      [description]
+	 * @param  {[type]}   param    [description]
+	 * @param  {[type]}   method   [description]
+	 * @param  {Function} callback [description]
+	 * @return {[type]}            [description]
+	 */
+	function ajax(url, param, method, callback){
+		for(var i in settings.api){
+			if(settings.api[i] === ""){
 				console.info("在此之前请调用 api.settings 方法");
 				return;
 			}
@@ -43,7 +91,7 @@
 		$.ajax({
 			type: method,
 			data: param,
-			url: settings.location + "/" + settings.version + "/" + url,
+			url: settings.api.location + "/" + settings.api.version + "/" + url,
 			dataType: 'json',
 			async:true,
 			xhrFields: {
@@ -57,98 +105,16 @@
 
 		// todo 当发生异常时，提示异常
 	}
-	app.api = {};
-	app.api.get = function(url, param, callback){
 
-		ajax(url, param, 'get', callback);
-		
-	}
-	app.api.post = function(url, param, callback){
-		ajax(url, param, 'post', callback);
-	}
-	
-	
+
+
+
 	/**
-	 * 返回
+	 * 加载指定页面
+	 * @param  {[type]} _this     [description]
+	 * @param  {[type]} page_data [description]
+	 * @return {[type]}           [description]
 	 */
-	app.apphistory = [];
-
-	app.back = function(){
-		var prev_page_index = app.apphistory.length - 2;
-		if(prev_page_index < 0){
-			return;
-		}
-		
-		var prev_page_data = app.apphistory[prev_page_index];
-		
-		load_page(null, prev_page_data);
-		app.apphistory.pop();
-		app.apphistory.pop();
-		
-	}
-
-
-	var alert_message = function(msg, m_width, m_height, m_loop_time, m_type){
-		
-		m_width = m_width ? m_width : '100%';
-		m_height = m_height ? m_height : '2rem';
-		m_loop_time = m_loop_time ? m_loop_time : 500;
-		m_id = 'alert_' + (new Date()).getTime();
-		
-		b_height = $(window).height();
-		var l_top = b_height / 2;
-
-
-		
-		var m_background_color = "rgb(255, 116, 116)";
-		switch(m_type){
-			case 'error':
-				m_background_color = "rgb(255, 116, 116)";
-				break;
-			case 'success':
-				m_background_color = "#65e26e";
-				break;
-			default:
-				m_background_color = "rgb(255, 116, 116)";
-				break;
-		}
-		var dom = $("<div />").css({
-			width: m_width,
-			height: m_height,
-			background: m_background_color,
-			position: 'fixed',
-			zIndex: '9999',
-			color: "#fff",
-			textAlign: 'center',
-			lineHeight: m_height,
-			top: b_height
-		}).attr('id', m_id).text(msg);
-		
-		$("body").append(dom);
-		
-		
-		dom.animate({'top': l_top}, m_loop_time);
-		
-		
-		setTimeout(function(){
-			dom.remove();
-		}, m_loop_time + 2000);
-
-		
-	}
-	
-	app.alert = {};
-	app.alert.error = function(msg, m_width, m_height, m_loop_time){
-		alert_message(msg, m_width, m_height, m_loop_time, 'error');
-	}
-	app.alert.success = function(msg, m_width, m_height, m_loop_time){
-		alert_message(msg, m_width, m_height, m_loop_time, 'success');
-	}
-
-	
-	
-	$("html").on("click", "a[app]", load_page);
-	
 	function load_page(_this, page_data){
 
 		if(page_data){
@@ -200,6 +166,8 @@
 
 		return false;
 	}
+
+
 	
 	function load(){
 		
@@ -329,9 +297,78 @@
 		}
 	}
 
-	app.load_page = function(_this){
-			load_page.call(_this);
-	};
+
+
+
+	/**
+	 * 消息弹出
+	 * @param  {[type]} msg         [description]
+	 * @param  {[type]} m_width     [description]
+	 * @param  {[type]} m_height    [description]
+	 * @param  {[type]} m_loop_time [description]
+	 * @param  {[type]} m_type      [description]
+	 * @return {[type]}             [description]
+	 */
+	var alert_message = function(msg, m_width, m_height, m_loop_time, m_type){
+		
+		m_width = m_width ? m_width : '100%';
+		m_height = m_height ? m_height : '2rem';
+		m_loop_time = m_loop_time ? m_loop_time : 500;
+		m_id = 'alert_' + (new Date()).getTime();
+		
+		b_height = $(window).height();
+		var l_top = b_height / 2;
+
+
+		
+		var m_background_color = "rgb(255, 116, 116)";
+		switch(m_type){
+			case 'error':
+				m_background_color = "rgb(255, 116, 116)";
+				break;
+			case 'success':
+				m_background_color = "#65e26e";
+				break;
+			default:
+				m_background_color = "rgb(255, 116, 116)";
+				break;
+		}
+		var dom = $("<div />").css({
+			width: m_width,
+			height: m_height,
+			background: m_background_color,
+			position: 'fixed',
+			zIndex: '9999',
+			color: "#fff",
+			textAlign: 'center',
+			lineHeight: m_height,
+			top: b_height
+		}).attr('id', m_id).text(msg);
+		
+		$("body").append(dom);
+		
+		
+		dom.animate({'top': l_top}, m_loop_time);
+		
+		
+		setTimeout(function(){
+			dom.remove();
+		}, m_loop_time + 2000);
+
+		
+	}
+
+	app.alert = {
+		error: function(msg, m_width, m_height, m_loop_time){
+			alert_message(msg, m_width, m_height, m_loop_time, 'error');
+		},
+		success: function(msg, m_width, m_height, m_loop_time){
+			alert_message(msg, m_width, m_height, m_loop_time, 'success');
+		}
+	}
+
+
+
 
 	w.app = app;
 }(window));
