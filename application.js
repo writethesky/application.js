@@ -23,6 +23,7 @@
 		api: {
 			location: "",
 			version: "",
+			versionSendType: 'url', //param、header
 		},
 		isChangeURL: false
 	}
@@ -32,7 +33,8 @@
 	var app = {
 		//设置方法
 		settings: function(param){
-			$.extend(settings, param);
+
+			settings = object_merge(settings, param);
 		},
 
 		api: {
@@ -88,10 +90,10 @@
 			}
 		}
 
-		$.ajax({
+		var ajaxObj = {
 			type: method,
 			data: param,
-			url: settings.api.location + "/" + settings.api.version + "/" + url,
+			url: settings.api.location + "/" + url,
 			dataType: 'json',
 			async:true,
 			xhrFields: {
@@ -101,7 +103,23 @@
             success: function(data){
             	callback && callback(data);
             }
-		});
+		};
+
+		switch(settings.api.versionSendType){
+			case 'url':
+				ajaxObj.url = settings.api.location + "/" + settings.api.version + "/" + url;
+				break;
+			case 'param':
+				ajaxObj.data.version = settings.api.version;
+				break;
+			case 'header':
+				ajaxObj.headers = {
+					'Api-Version': settings.api.version, 
+				}
+			break;
+		}
+
+		$.ajax(ajaxObj);
 
 		// todo 当发生异常时，提示异常
 	}
@@ -274,6 +292,30 @@
 			check() && setTimeout(fn, 0) || setTimeout(poll, 100);
 		})();
 	} 
+
+
+	/**
+	 * 对象合并[递归级]
+	 * @param  {[type]} obj1 [description]
+	 * @param  {[type]} obj2 [description]
+	 * @return {[type]}      [description]
+	 */
+	function object_merge(obj1, obj2){
+		// for(var i in obj1){
+
+			for(var j in obj2){
+				if(obj1.hasOwnProperty(j) && (typeof(obj1[j]) == 'object')){
+					if(typeof(obj2[j]) == 'object'){
+						obj1[j] = object_merge(obj1[j], obj2[j]);
+					}
+				}else{
+					obj1[j] = obj2[j];
+				}
+			}
+
+			return obj1;
+		// }
+	}
 
 	var load = new load();
 	

@@ -12,8 +12,11 @@
 
 ```
 app.settings({
-	location: "http://xxx.xxx.xxx/", //设置api服务器地址
-	version: 'v1', //设置api版本
+	api: {
+		location: "http://xxx.xxx.xxx/", //设置api服务器地址
+		version: 'v1', //设置api版本
+		versionSendType: 'url', //版本号的发送方式，可能的值 url、headers、param，默认为 url
+	},
 	isChangeURL: false //是否开启url自动变更，此选项仅在  server中允许时可以被设置为true
 });
 ```
@@ -30,7 +33,7 @@ app.api.get('接口名称', 回调函数);
 如
 
 ```
-app.api.get('user/get_name', function(data){
+app.api.get('user/get_name', {name: 'testname'}, function(data){
     //todo 接口请求成功后的后续操作
 });
 ```
@@ -38,7 +41,7 @@ app.api.get('user/get_name', function(data){
 如上代码将发送如下请求
 
 ```
-Request URL:http://xxx.xxx.xxx/v1/user/get_name
+Request URL:http://xxx.xxx.xxx/v1/user/get_name?name=testname
 Request Method:GET
 Host:xxx.xxx.xxx
 ```
@@ -65,6 +68,18 @@ Form Data:
 name:testname
 ```
 
+如果 `versionSendType` 设置为 `param`
+则
+get时候  `Request URL:http://xxx.xxx.xxx/user/get_name?version=v1`
+post时候 
+```
+Form Data:
+version:v1
+```
+
+如果 `versionSendType` 设置为 `header`
+则会在发送请求时在`Request Headers`中增加一个 `Api-Version`的参数
+此种情况，需要服务器在 `Response Headers`中的 `Access-Control-Allow-Headers`参数中增加`Api-Version`或者直接设置为`*`
 
 ##使用异步载入
 
