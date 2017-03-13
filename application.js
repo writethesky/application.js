@@ -4,7 +4,7 @@
  * https://github.com/writethesky/application.js
  */
 (function(w){
-
+	'use strict';
 
 	if(typeof($) == 'undefined' || typeof($.fn) == 'undefined' || typeof($.fn.jquery) == 'undefined' || $.fn.jquery < '3.1.1'){
 
@@ -16,7 +16,7 @@
 	var t = '?t=' + (new Date()).getTime();
 	
 	/**
-	 * api 相关
+	 * 设置参数
 	 */
 	var settings = {
 		location: "",
@@ -24,6 +24,8 @@
 		isChangeURL: false
 	}
 	var app = {};
+
+	//设置方法
 	app.settings = function(param){
 
 
@@ -31,7 +33,7 @@
 	}
 
 	var ajax = function(url, param, method, callback){
-		for(i in settings){
+		for(var i in settings){
 			if(settings[i] === ""){
 				console.info("在此之前请调用 api.settings 方法");
 				return;
@@ -149,7 +151,6 @@
 	
 	function load_page(_this, page_data){
 
-		
 		if(page_data){
 			var dataHref = page_data.html;
 			var dataId = page_data.container_id;
