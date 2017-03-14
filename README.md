@@ -68,16 +68,19 @@ Form Data:
 name:testname
 ```
 
-如果 `versionSendType` 设置为 `param`
+	如果 `versionSendType` 设置为 `param`
 则
+
 get时候  `Request URL:http://xxx.xxx.xxx/user/get_name?version=v1`
+
 post时候 
+
 ```
 Form Data:
 version:v1
 ```
 
-如果 `versionSendType` 设置为 `header`
+	如果 `versionSendType` 设置为 `header`
 则会在发送请求时在`Request Headers`中增加一个 `Api-Version`的参数
 此种情况，需要服务器在 `Response Headers`中的 `Access-Control-Allow-Headers`参数中增加`Api-Version`或者直接设置为`*`
 
@@ -124,7 +127,7 @@ version:v1
 
 对于异步引入的js文件，会自动运行起内部的构造函数
 
-*建议每个js文件都要闭包，以免各个js文件中产生命名冲入
+*建议每个js文件都要闭包，以免各个js文件中产生命名冲突。
 
 如
 

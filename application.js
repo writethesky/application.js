@@ -6,9 +6,15 @@
 (function(w){
 	'use strict';
 
+	//jQuery版本检测
 	if(typeof($) == 'undefined' || typeof($.fn) == 'undefined' || typeof($.fn.jquery) == 'undefined' || $.fn.jquery < '3.1.1'){
 
 		console.info("请引入3.1.1版本以上的jQuery");
+		return;
+	}
+
+	if(!is_html5()){
+		$("body").html("<h1>您的内核版本太低</h1><br /><br /><h3>如果您正在使用的浏览器访问本站，建议升级您的浏览器</h3><br /><br /><h3>如果您正在使用手机等客户端打开本APP，建议您升级您的操作系统</h3>").css({background: '#fff', fontSize: '.5rem', textAlign: 'center'});
 		return;
 	}
 
@@ -272,6 +278,12 @@
 	}
 
 
+	/**
+	 * 等待CSS加载并渲染完毕
+	 * @param  {Function} fn   [description]
+	 * @param  {[type]}   link [description]
+	 * @return {[type]}        [description]
+	 */
 	function cssReady(fn, link) {
 		var d = document,
 		t = d.createStyleSheet,
@@ -315,6 +327,20 @@
 
 			return obj1;
 		// }
+	}
+
+	/**
+	 * 检测浏览器是否支持html5
+	 * @return {Boolean} [description]
+	 */
+	function is_html5(){
+		var my_canvas = $("<canvas />");
+		$("body").append(my_canvas);
+		if(!my_canvas.get(0).getContext){
+
+			return false;
+		}
+		return true;
 	}
 
 	var load = new load();
