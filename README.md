@@ -156,7 +156,7 @@ js.a.test.isShow = true;
 
 ```
 //假设当前js文件的文件名是 'js/a/brand.js'
-app.namespace.register('js/a/brand'); //注册命名空间
+app.namespace.register('js.a.brand'); //注册命名空间
 (function(w){
 
 	// 构造函数
