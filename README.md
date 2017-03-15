@@ -94,13 +94,13 @@ version:v1
 
 `app` 此处必需填写，但无需填写值。无此属性的`a`标签依然采用同步跳转机制
 
-`data-href` 需要异步加载的html文件地址
+`href` 需要异步加载的html文件地址
 
-`data-id`    容器id，将会把异步加载的内容渲染到指定的容器中
+`container`    容器id，将会把异步加载的内容渲染到指定的容器中
 
-`data-css` 需要异步加载的css文件地址
+`css` 需要异步加载的css文件地址
 
-`data-js` 需要异步加载的js文件地址
+`js` 需要异步加载的js文件地址
 
 `data-obj` 需要夸页面传输的数据
 
@@ -117,10 +117,10 @@ version:v1
 >这是一个超连接</a>
 ```
 多css自动载入
-`data-css="css1.css|css2.css|css3.css"`
+`css="css1.css|css2.css|css3.css"`
 
 多js自动载入
-`data-js="js1.js|js2.js|js3.js"`
+`js="js1.js|js2.js|js3.js"`
 
 ###命名空间
 
