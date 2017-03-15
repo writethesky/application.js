@@ -72,6 +72,17 @@
 			app.apphistory.pop();
 			app.apphistory.pop();
 			
+		},
+		namespace: {
+			register: function(path){     
+			    var arr = path.split(".");     
+			    var ns = "";     
+			    for(var i=0;i<arr.length;i++){     
+			        if(i>0) ns += ".";     
+			        ns += arr[i];    
+			        eval("if(typeof(" + ns + ") == 'undefined') window." + ns + " = new Object();");     
+			    }     
+			}
 		}
 	}
 
@@ -246,7 +257,7 @@
 		
 		this.js = function(arr, callback){
 
-			for(i in arr){
+			for(var i in arr){
 				var src = arr[i] + t;
 				var body = document.getElementsByTagName('body').item(0);
 				var is_run = true;
@@ -262,6 +273,7 @@
 						
 					}
 				});
+		
 				if(is_run){				
 					var script = document.createElement('script');
 					script.src = src;
@@ -269,8 +281,11 @@
 					body.appendChild(script);
 				}else{
 					var js_name = arr[i];
-//					console.log(js_name);
-					w[js_name] && w[js_name]();
+					js_name = js_name.replace(/\//g, '.');
+					js_name = js_name.substr(0, js_name.length - 3);
+			
+					eval(js_name + "&&" + js_name + "()");
+
 				}
 			}
 			callback && callback();
