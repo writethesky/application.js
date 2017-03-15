@@ -1,14 +1,14 @@
-# application.js
+# application.js #
 
-#依赖
+# 依赖
 
 `jquery 3.1.1`
 
-#使用方法
+# 使用方法
 
 引入 `<script src="application.js"></script>`
 
-##使用之前的设置
+## 使用之前的设置
 
 ```
 app.settings({
@@ -21,7 +21,7 @@ app.settings({
 });
 ```
 
-##使用api接口
+## 使用api接口
 
 api请求分为两种
 
@@ -84,7 +84,7 @@ version:v1
 则会在发送请求时在`Request Headers`中增加一个 `Api-Version`的参数
 此种情况，需要服务器在 `Response Headers`中的 `Access-Control-Allow-Headers`参数中增加`Api-Version`或者直接设置为`*`
 
-##使用异步载入
+## 使用异步载入
 
 自动载入包括html、css、js。自动载入默认使用的还是`<a>`标签，但对`<a>`标签的机制进行了调整，点击`<a>`标签不再是同步页面跳转，而是自动进行异步页面加载
 
@@ -122,7 +122,7 @@ version:v1
 多js自动载入
 `js="js1.js|js2.js|js3.js"`
 
-###命名空间
+### 命名空间
 
 为了避免命名冲突的问题，本js提供了注册命名空间的方法
 
@@ -146,7 +146,7 @@ js.a.test.isShow = true;
 
 
 
-###构造函数
+### 构造函数
 
 对于异步引入的js文件，会自动运行内部的构造函数
 
@@ -169,7 +169,7 @@ app.namespace.register('js/a/brand'); //注册命名空间
 }(window));
 ```
 
-###返回上一页
+### 返回上一页
 
 直接调用 `app.back();`即可
 
