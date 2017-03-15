@@ -205,7 +205,7 @@
 
 	
 	function load(){
-		
+		var __this = this;
 		this.html = function(url, id, callback){
 			
 			$.get(url + t, function(data){
@@ -243,7 +243,7 @@
 				}
 
 				arr.shift();
-				var tmp = this.css;
+				var tmp = __this.css;
 				cssReady(function(){
 					tmp(arr, callback);
 				});
@@ -256,7 +256,7 @@
 		}
 		
 		this.js = function(arr, callback){
-
+			var __js = this;
 			for(var i in arr){
 				var src = arr[i] + t;
 				var body = document.getElementsByTagName('body').item(0);
