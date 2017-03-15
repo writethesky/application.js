@@ -126,21 +126,21 @@ version:v1
 
 为了避免命名冲突的问题，本js提供了注册命名空间的方法
 
-//假设当前js所在的位置为 `js/a/` 文件夹下
+//假设当前js所在的位置为 `js/a/test.js` 
 
-`app.namespace.register('js.a');` 即可
+`app.namespace.register('js.a.test');` 即可
 
-之后则可以直接使用 `js.a`
+之后则可以直接使用 `js.a.test`
 
 例如
 
 ```
-js.a.alert = function(msg){
+js.a.test.alert = function(msg){
 	
 	alert("^_^" + msg + "^_^");
 }
 
-js.a.isShow = true;
+js.a.test.isShow = true;
 ……
 ```
 
@@ -150,17 +150,17 @@ js.a.isShow = true;
 
 对于异步引入的js文件，会自动运行内部的构造函数
 
-*建议每个js文件都要闭包，以免各个js文件中产生命名冲突。
+*为了免各个js文件中产生命名冲突，建议每个js文件都要闭包 或 各个变量、函数均使用命名空间
 
 如
 
 ```
 //假设当前js文件的文件名是 'js/a/brand.js'
-app.namespace.register('js/a'); //注册命名空间
+app.namespace.register('js/a/brand'); //注册命名空间
 (function(w){
 
 	// 构造函数
-	js.brand = function(){
+	js.a.brand = function(){
 		//todo 需要初始化的逻辑
 	}
 	

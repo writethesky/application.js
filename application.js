@@ -242,10 +242,13 @@
 					
 				}
 
-				arr.shift();
-				var tmp = __this.css;
-				cssReady(function(){
-					tmp(arr, callback);
+				
+				cssReady(style, function(){
+
+					arr.shift();
+
+					var tmp = __this.css;
+					__this.css(arr, callback);
 				});
 
 				
@@ -257,8 +260,9 @@
 		
 		this.js = function(arr, callback){
 			var __js = this;
-			for(var i in arr){
-				var src = arr[i] + t;
+			
+			if(arr.length > 0){
+				var src = arr[0] + t;
 				var body = document.getElementsByTagName('body').item(0);
 				var is_run = true;
 				$("script").each(function(){
@@ -280,15 +284,26 @@
 					script.type = 'text/javascript';
 					body.appendChild(script);
 				}
+
+
+				
+
 				jsReady(script, function(){
-					var js_name = arr[i];
+					
+					var js_name = arr[0];
 						js_name = js_name.replace(/\//g, '.');
 						js_name = js_name.substr(0, js_name.length - 3);
-					eval(js_name + "&&" + js_name + "()");
+					eval("try{" + js_name + "&&" + js_name + "()} catch(e) {}");
+
+					arr.shift();
+					var tmp = __this.js;
+					tmp(arr, callback);
 				});
 				
+			}else{
+				callback && callback();
 			}
-			callback && callback();
+			
 		}
 	}
 
@@ -299,18 +314,20 @@
 	 * @param  {[type]}   link [description]
 	 * @return {[type]}        [description]
 	 */
-	function cssReady(fn, link) {
+	function cssReady(style, fn) {
 		var d = document,
 		t = d.createStyleSheet,
 		r = t ? 'rules' : 'cssRules',
 		s = t ? 'styleSheet' : 'sheet',
 		l = d.getElementsByTagName('link');
 		// passed link or last link node
-		link || (link = l[l.length - 1]);
+		style || (style = l[l.length - 1]);
+
 		function check() {
 			try {
-				return link && link[s] && link[s][r] && link[s][r][0];
+				return style && style[s] && style[s][r] && style[s][r];
 			} catch(e) {
+
 				return false;
 			}
 		}
