@@ -122,24 +122,47 @@ version:v1
 多js自动载入
 `data-js="js1.js|js2.js|js3.js"`
 
+###命名空间
+
+为了避免命名冲突的问题，本js提供了注册命名空间的方法
+
+//假设当前js所在的位置为 `js/a/` 文件夹下
+
+`app.namespace.register('js.a');` 即可
+
+之后则可以直接使用 `js.a`
+
+例如
+
+```
+js.a.alert = function(msg){
+	
+	alert("^_^" + msg + "^_^");
+}
+
+js.a.isShow = true;
+……
+```
+
+
 
 ###构造函数
 
-对于异步引入的js文件，会自动运行起内部的构造函数
+对于异步引入的js文件，会自动运行内部的构造函数
 
 *建议每个js文件都要闭包，以免各个js文件中产生命名冲突。
 
 如
 
 ```
+//假设当前js文件的文件名是 'js/a/brand.js'
+app.namespace.register('js/a'); //注册命名空间
 (function(w){
-    //todo 这里开始编辑js代码
-	var file_name = 'brand.js'; //当前js文件的文件名
+
 	// 构造函数
-	w[file_name] = function(){
+	js.brand = function(){
 		//todo 需要初始化的逻辑
 	}
-	w[file_name]();
 	
 	
 	// todo 其它的代码逻辑

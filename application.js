@@ -279,14 +279,14 @@
 					script.src = src;
 					script.type = 'text/javascript';
 					body.appendChild(script);
-				}else{
-					var js_name = arr[i];
-					js_name = js_name.replace(/\//g, '.');
-					js_name = js_name.substr(0, js_name.length - 3);
-			
-					eval(js_name + "&&" + js_name + "()");
-
 				}
+				jsReady(script, function(){
+					var js_name = arr[i];
+						js_name = js_name.replace(/\//g, '.');
+						js_name = js_name.substr(0, js_name.length - 3);
+					eval(js_name + "&&" + js_name + "()");
+				});
+				
 			}
 			callback && callback();
 		}
@@ -319,6 +319,17 @@
 			check() && setTimeout(fn, 0) || setTimeout(poll, 100);
 		})();
 	} 
+
+	function jsReady(script, fn){
+		script.onload=script.onreadystatechange=function(){  
+		   if(!this.readyState||this.readyState=='loaded'||this.readyState=='complete'){  
+			   
+			   script.onload=script.onreadystatechange=null; 
+			   setTimeout(fn, 0);
+			} 
+			//  
+		}
+	}
 
 
 	/**
