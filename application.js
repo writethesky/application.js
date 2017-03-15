@@ -189,9 +189,9 @@
 
 		app.apphistory.push(page_data);
 		
-		dataHref && load.html(dataHref, dataId, function(){
+		dataCss && load.css(dataCss, function(){
 			$(window).resize();
-			dataCss && load.css(dataCss, function(){
+			dataHref && load.html(dataHref, dataId, function(){
 				$(window).resize();
 				dataJs && load.js(dataJs);
 			});
@@ -240,17 +240,24 @@
 					style.type = 'text/css';
 					head.appendChild(style);
 					
+					cssReady(style, function(){
+						construct();
+						
+					});
+					
+				}else{
+					construct();
 				}
 
 				
-				cssReady(style, function(){
+				
 
+				function construct(){
 					arr.shift();
 
 					var tmp = __this.css;
 					__this.css(arr, callback);
-				});
-
+				}
 				
 				
 			}else{
@@ -265,6 +272,7 @@
 				var src = arr[0] + t;
 				var body = document.getElementsByTagName('body').item(0);
 				var is_run = true;
+				var script;
 				$("script").each(function(){
 		
 					var tmp = window.location.href.split("/");
@@ -274,22 +282,25 @@
 
 					if(complete_src == this.src){
 						is_run = false;
+						script = this;
 						
 					}
 				});
 		
 				if(is_run){				
-					var script = document.createElement('script');
+					script = document.createElement('script');
 					script.src = src;
 					script.type = 'text/javascript';
 					body.appendChild(script);
+					jsReady(script, function(){
+					
+						construct();
+					});
+				}else{
+					construct();
 				}
 
-
-				
-
-				jsReady(script, function(){
-					
+				function construct(){
 					var js_name = arr[0];
 						js_name = js_name.replace(/\//g, '.');
 						js_name = js_name.substr(0, js_name.length - 3);
@@ -298,7 +309,10 @@
 					arr.shift();
 					var tmp = __this.js;
 					tmp(arr, callback);
-				});
+				}
+				
+
+				
 				
 			}else{
 				callback && callback();
@@ -338,6 +352,7 @@
 	} 
 
 	function jsReady(script, fn){
+		
 		script.onload=script.onreadystatechange=function(){  
 		   if(!this.readyState||this.readyState=='loaded'||this.readyState=='complete'){  
 			   
@@ -377,7 +392,7 @@
 	 * @return {Boolean} [description]
 	 */
 	function is_html5(){
-		var my_canvas = $("<canvas />");
+		var my_canvas = $("<canvas style='position: absolute; top: 0; z-index: -1;'/>");
 		$("body").append(my_canvas);
 		if(!my_canvas.get(0).getContext){
 
@@ -483,4 +498,3 @@
 
 	w.app = app;
 }(window));
-
