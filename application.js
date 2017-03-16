@@ -178,7 +178,7 @@
 		if(settings.isChangeURL){
 			w.history.pushState(null, null, dataHref);
 		}
-		
+
 		var page_data = {
 			html: dataHref,
 			css: dataCss,
@@ -187,11 +187,13 @@
 			obj: dataObj
 		};
 
+		
 		app.apphistory.push(page_data);
 		
 		dataCss && load.css(dataCss, function(){
 			$(window).resize();
 			dataHref && load.html(dataHref, dataId, function(){
+				
 				$(window).resize();
 				dataJs && load.js(dataJs);
 			});
@@ -253,10 +255,11 @@
 				
 
 				function construct(){
-					arr.shift();
+					var tmp_arr = arr.slice(0);
+					tmp_arr.shift();
 
 					var tmp = __this.css;
-					__this.css(arr, callback);
+					__this.css(tmp_arr, callback);
 				}
 				
 				
@@ -306,9 +309,11 @@
 						js_name = js_name.substr(0, js_name.length - 3);
 					eval("try{" + js_name + "&&" + js_name + "()} catch(e) {}");
 
-					arr.shift();
+					var tmp_arr = arr.slice(0);
+
+					tmp_arr.shift();
 					var tmp = __this.js;
-					tmp(arr, callback);
+					tmp(tmp_arr, callback);
 				}
 				
 
