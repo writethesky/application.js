@@ -174,3 +174,8 @@ app.namespace.register('js.a.brand'); //注册命名空间
 直接调用 `app.back();`即可
 
 
+# License
+
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2013-present, writethesky（撰天）
