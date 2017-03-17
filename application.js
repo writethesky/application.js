@@ -1,5 +1,7 @@
-/**
+/*!
  * application.js v1.0
+ * (c) 2017 writethesky（撰天）
+ * Released under the MIT License.
  * https://github.com/writethesky
  * https://github.com/writethesky/application.js
  */
@@ -93,11 +95,10 @@
 
 	/**
 	 * 发送ajax请求
-	 * @param  {[type]}   url      [description]
-	 * @param  {[type]}   param    [description]
-	 * @param  {[type]}   method   [description]
-	 * @param  {Function} callback [description]
-	 * @return {[type]}            [description]
+	 * @param  {string}   url      请求路径
+	 * @param  {object}   param    参数对象
+	 * @param  {string}   method   请求类型 get、post
+	 * @param  {Function} callback 回调函数 参数data
 	 */
 	function ajax(url, param, method, callback){
 		for(var i in settings.api){
@@ -147,8 +148,7 @@
 	/**
 	 * 加载指定页面
 	 * @param  {[type]} _this     [description]
-	 * @param  {[type]} page_data [description]
-	 * @return {[type]}           [description]
+	 * @param  {object} page_data 需要包含 html、container_id、css、js等属性 
 	 */
 	function load_page(_this, page_data){
 
@@ -329,9 +329,8 @@
 
 	/**
 	 * 等待CSS加载并渲染完毕
-	 * @param  {Function} fn   [description]
-	 * @param  {[type]}   link [description]
-	 * @return {[type]}        [description]
+	 * @param  {[object]}   style css元素对象
+	 * @param  {Function} fn   回调函数	
 	 */
 	function cssReady(style, fn) {
 		var d = document,
@@ -371,9 +370,9 @@
 
 	/**
 	 * 对象合并[递归级]
-	 * @param  {[type]} obj1 [description]
-	 * @param  {[type]} obj2 [description]
-	 * @return {[type]}      [description]
+	 * @param  {object} obj1 对象1
+	 * @param  {object} obj2 对象2
+	 * @return {object}      合并后的对象
 	 */
 	function object_merge(obj1, obj2){
 		// for(var i in obj1){
@@ -394,7 +393,7 @@
 
 	/**
 	 * 检测浏览器是否支持html5
-	 * @return {Boolean} [description]
+	 * @return {Boolean} 是否支持
 	 */
 	function is_html5(){
 		var my_canvas = $("<canvas style='position: absolute; top: 0; z-index: -1;'/>");
