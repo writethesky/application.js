@@ -1,10 +1,12 @@
-/*!
- * application.js v1.0
- * (c) 2017 writethesky（撰天）
- * Released under the MIT License.
- * https://github.com/writethesky
- * https://github.com/writethesky/application.js
- */
+/*! application.js v1.0.0 
+ * https://github.com/writethesky 
+ * https://github.com/writethesky/application.js 
+ * 
+ * Copyright (c) 2017 writethesky（撰天） 
+ * Released under the MIT License. 
+ * 
+ * Date: 2017-03-17 */
+ 
 (function(w){
 	'use strict';
 

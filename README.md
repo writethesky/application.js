@@ -6,7 +6,9 @@
 
 # 使用方法
 
-引入 `<script src="application.js"></script>`
+1.引入`jquery 3.1.1`
+
+2.引入 `<script src="dist/application.min.js"></script>`
 
 ## 使用之前的设置
 
