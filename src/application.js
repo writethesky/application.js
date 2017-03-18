@@ -192,9 +192,9 @@
 		
 		app.apphistory.push(page_data);
 		
-		dataCss && load.css(dataCss, function(){
+		load.css(dataCss, function(){
 			$(window).resize();
-			dataHref && load.html(dataHref, dataId, function(){
+			load.html(dataHref, dataId, function(){
 				
 				$(window).resize();
 				dataJs && load.js(dataJs);
