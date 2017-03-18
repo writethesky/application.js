@@ -90,10 +90,18 @@
 		}
 	}
 
-	//对浏览器原生的a标签跳转机制进行调整
-	$("html").on("click", "a[app]", load_page);
 
 	app.apphistory = [];
+	var load = new load();
+
+	//对浏览器原生的a标签跳转机制进行调整
+	$("html").on("click", "a[app]", load_page);
+	$("a[app][auto]").each(function(){
+	
+		$(this).click();
+	});
+
+	
 
 	/**
 	 * 发送ajax请求
@@ -189,7 +197,7 @@
 			obj: dataObj
 		};
 
-		
+	
 		app.apphistory.push(page_data);
 		
 		load.css(dataCss, function(){
@@ -415,7 +423,7 @@
 		return true;
 	}
 
-	var load = new load();
+
 	
 	
 
