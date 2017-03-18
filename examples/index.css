@@ -12,7 +12,7 @@
 }
 
 .nav li {
-	width: 50%;
+	width: 33.333%;
 	height: 50px;
 	background: #ccc;
 	float: left;
@@ -37,4 +37,9 @@
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+}
+
+.app-clicked {
+	background: #768136;
+	color: #fff !important;
 }

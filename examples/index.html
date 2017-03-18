@@ -6,19 +6,34 @@
 </head>
 <body>
 <div class="box">
+	<div id="content">
+
+	</div>
 	<ul class="nav">
 		<li>
-			<a id="home" app 
-			   js="home.js">首页</a>
+			<a id="home" 
+			   app auto
+			   css="home.css"
+			   container="content"
+			   href="home.html">首页</a>
 		</li>
-		<li><a href="">页2</a></li>
+		<li>
+			<a app 
+			   css="page2.css"
+			   container="content"
+			   href="page2.html">页2</a>
+		</li>
+		<li>
+			<a app 
+			   container="page3"
+			   href="page3.html">页3</a>
+			
+		</li>
 	</ul>
 </div>
 
 <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="../src/application.js"></script>
-<script type="text/javascript">
-	$('#home').click();
-</script>
+
 </body>
 </html>

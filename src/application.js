@@ -153,7 +153,7 @@
 	 * @param  {object} page_data 需要包含 html、container_id、css、js等属性 
 	 */
 	function load_page(_this, page_data){
-
+		var __this = this;
 		if(page_data){
 			var dataHref = page_data.html;
 			var dataId = page_data.container_id;
@@ -197,7 +197,11 @@
 			load.html(dataHref, dataId, function(){
 				
 				$(window).resize();
-				dataJs && load.js(dataJs);
+				
+				load.js(dataJs, function(){
+					$("a[app]").removeClass('app-clicked');
+					$(__this).addClass('app-clicked');
+				});
 			});
 		});
 
