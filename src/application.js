@@ -211,11 +211,15 @@
 	function load(){
 		var __this = this;
 		this.html = function(url, id, callback){
-			
-			$.get(url + t, function(data){
-				$("#" + id).html(data);
+			if(url){
+				$.get(url + t, function(data){
+					$("#" + id).html(data);
+					callback && callback();
+				});
+			}else{
 				callback && callback();
-			});
+			}
+			
 		}
 		
 		this.css = function(arr, callback){
