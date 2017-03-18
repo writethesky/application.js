@@ -1,0 +1,40 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.box {
+	width: 300px;
+	height: 500px;
+	margin: 0 auto;
+	background: #eee;
+	position: relative;
+}
+
+.nav li {
+	width: 50%;
+	height: 50px;
+	background: #ccc;
+	float: left;
+	list-style: none;
+	margin: 0;
+	text-align: center;
+	line-height: 50px;
+}
+
+.nav li a {
+	display: block;
+	color: #000;
+	text-decoration: none;
+}
+
+.nav li:hover a{
+	background: #325873;
+	color: #ffffff;
+}
+
+.nav {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
