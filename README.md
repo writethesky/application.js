@@ -114,10 +114,13 @@ version:v1
 	href="register.html"
 	css="register.css"
 	js="register.js"
-	data-obj="{user_id: 111}"
+	data-obj='{"user_id": 111}'
 
 >这是一个超连接</a>
 ```
+
+一定要注意，`data-obj`的单双引号的运用
+
 多css自动载入
 `css="css1.css|css2.css|css3.css"`
 
