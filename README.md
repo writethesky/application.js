@@ -183,6 +183,7 @@ app.namespace.register('js.a.brand'); //注册命名空间
 * 异步载入dom内部处理机制
 
 
+![流程如](application内部机制流程图.png)
 
 # License
 
