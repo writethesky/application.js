@@ -178,6 +178,11 @@ app.namespace.register('js.a.brand'); //注册命名空间
 
 直接调用 `app.back();`即可
 
+# 技术细节
+
+* 异步载入dom内部处理机制
+
+
 
 # License
 
